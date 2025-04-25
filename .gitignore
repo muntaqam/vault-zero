@@ -1,3 +1,17 @@
+
+#node
+node_modules/
+.env
+
+#python
+__pycache__/
+venv/
+.env
+
+#Build
+dist/
+build/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -172,3 +186,5 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
