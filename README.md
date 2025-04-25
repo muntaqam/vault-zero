@@ -1,4 +1,5 @@
-# vault-zero# 🔐 Password Manager Project
+# vault-zero
+# 🔐 Password Manager Project
 
 A full-stack password manager using client-side encryption and JWT-based auth. Built with FastAPI, PostgreSQL, and React.
 
