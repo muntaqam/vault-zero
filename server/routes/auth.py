@@ -1,9 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
+from server.auth.dependencies import get_current_user
 from sqlmodel import Session, select
 from server.db import get_session
 from server.models.user import User
 from server.schemas import UserCreate, UserLogin
-from server.auth.hash_utils import create_access_token, hash_password, verify_password
+from server.auth.hash_utils import hash_password, verify_password
+from server.auth.jwt_handler import create_access_token
 
 router = APIRouter()
 
@@ -32,3 +34,6 @@ async def login(login_data: UserLogin, session = Depends(get_session)):
     return{"access_token": token, "token_type":"bearer"}
     
     
+@router.get("/me")
+async def read_current_user(user: User = Depends(get_current_user)):
+    return {"email": user.email}
