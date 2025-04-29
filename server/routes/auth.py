@@ -1,10 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
-
 from server.db import get_session
 from server.models.user import User
-from server.schemas import UserCreate
-from server.auth.hash_utils import hash_password
+from server.schemas import UserCreate, UserLogin
+from server.auth.hash_utils import create_access_token, hash_password, verify_password
 
 router = APIRouter()
 
@@ -19,3 +18,17 @@ async def register(user: UserCreate, session: Session = Depends(get_session)):
     session.commit()
     session.refresh(new_user)
     return {"message": "User registered successfully"}
+
+
+@router.post("/login")
+async def login(login_data: UserLogin, session = Depends(get_session)):
+    user = session.exec(select(User).where(User.email == login_data.login_email)).first()
+    if not user:
+        raise HTTPException(status_code = 400, detail = "Invalid credentials")
+    if not verify_password(login_data.password,user.hashed_password):
+        raise HTTPException(status_code = 400, detail = "Invalid credentials")
+    
+    token = create_access_token({"sub": user.email})
+    return{"access_token": token, "token_type":"bearer"}
+    
+    
