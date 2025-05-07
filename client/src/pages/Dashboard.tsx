@@ -5,6 +5,7 @@ import { columns } from "./columns";
 import { User } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import api from "@/lib/axios";
+import { Button } from "@/components/ui/button";
 
 export default function Dashboard() {
     const [email, setEmail] = useState<string>("");
@@ -40,6 +41,16 @@ export default function Dashboard() {
             <h1 className="text-2xl font-bold mb-4">
                 {email ? `${email}'s Dashboard` : "User Dashboard"}
             </h1>
+            <Button
+                variant="destructive"
+                onClick={() => {
+                    localStorage.removeItem("token");
+                    window.location.href = "/register"; // or "/login" if you have that
+                }}
+            >
+                Logout
+            </Button>
+
             <DataTable columns={columns} data={data} />
         </div>
     );
