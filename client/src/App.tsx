@@ -1,19 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ProfileForm } from "@/pages/Register"; // assuming you're still using that name
+import Dashboard from "./pages/Dashboard";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="p-6 bg-white rounded shadow text-center">
-        <h1 className="text-2xl font-bold text-blue-600">Vault Zero 🔐</h1>
-        <p className="mt-2 text-gray-700">Tailwind is working!</p>
-      </div>
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/register" element={<ProfileForm />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+
+
+        {/* You can add more routes here later */}
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
